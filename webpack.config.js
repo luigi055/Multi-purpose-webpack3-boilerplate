@@ -103,6 +103,7 @@ module.exports = {
     port: 3000,
     clientLogLevel: 'none',
     historyApiFallback: true,
+    open: true,
   },
   devtool: 'cheap-module-eval-source-map',
 };
