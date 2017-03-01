@@ -5,3 +5,4 @@ public/assets/
 public/dist/
 yarn-error.log/
 npm-debug.log/
+debug.log/
