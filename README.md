@@ -1,0 +1,1 @@
+#Multi purpose Webpack 2 boilerplate
