@@ -62,8 +62,8 @@ module.exports = {
         }),
       }, // end scss loader
       {
-        test: /\.hbs$/,
-        loader: 'handlebars-loader',
+        test: /\.html$/,
+        loader: 'html-loader',
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
@@ -94,7 +94,7 @@ module.exports = {
     new ExtractTextPlugin('style.css'),
     new HTMLWebpackPlugin({
       title: 'Home',
-      template: 'views/index.hbs',
+      template: 'views/index.html',
     }),
   ],
   devServer: {
