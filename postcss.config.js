@@ -1,7 +1,8 @@
 const autoprefixer = require('autoprefixer');
 const vmin = require('postcss-vmin');
-const pixrem = require('pixrem'); //solving issues with rem units for ie9 and 10
+const pixrem = require('pixrem'); // solving issues with rem units for ie9 and 10
 const willChange = require('postcss-will-change'); // better rendering animation for ie11
+const mqPacker = require('css-mqpacker'); // pack various similar mediaqueries in one
 
 module.exports = {
   plugins: [
@@ -11,5 +12,6 @@ module.exports = {
     }),
     vmin,
     pixrem,
+    mqPacker,
   ],
 };
