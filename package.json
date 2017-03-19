@@ -6,11 +6,10 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "build": "SET NODE_ENV=development& webpack",
-    "build-watch": "SET NODE_ENV=development& webpack -d -w",
-    "prod": "SET NODE_ENV=production& webpack -p",
-    "test": "mocha **/*.test.js",
-    "text-watch": "nodemon --exec \"yarn test\""
+    "prod": "SET NODE_ENV=production& node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js -p",
+    "build-dev": "webpack",
+    "build-dev--watch": "webpack -d -w",
+    "build": "SET NODE_ENV=production& webpack -p"
   },
   "repository": {},
   "author": "Pedro La Rosa",
@@ -60,6 +59,7 @@
     "font-awesome": "^4.7.0",
     "foundation-sites": "^6.3.1",
     "handlebars": "^4.0.6",
-    "jquery": "^3.1.1"
+    "jquery": "^3.1.1",
+    "tether": "^1.4.0"
   }
 }

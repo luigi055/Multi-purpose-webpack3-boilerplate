@@ -1,14 +1,12 @@
-// Importing project's base variables
+// variables
 @import "base/variables";
 
-// Fontawesome fonts
-@import "font-awesome/font-awesome";
+// Font Awesome
+@import 'font-awesome';
 
-// Foundation sites 
-@import "foundation/settings";
-@import "foundation/foundation";
-
-@include foundation-everything;
+// Bootstrap settings
+@import "~bootstrap/scss/mixins";
+@import "bootstrap/bootstrap";
 
 // Components
-@import "components/title";
+@import "components/title-component";

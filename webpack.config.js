@@ -1,13 +1,17 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: [
     // 'babel-polyfill',
     'script-loader!jquery/dist/jquery.min.js',
-    'script-loader!foundation-sites/dist/js/foundation.min.js',
+    'script-loader!tether/dist/js/tether.min.js',
+    'script-loader!bootstrap/dist/js/bootstrap.min.js',
     './app.js',
   ],
   output: {
@@ -53,7 +57,7 @@ module.exports = {
               options: {
                 includePaths: [
                   path.resolve(__dirname, './node_modules/font-awesome/scss'),
-                  path.resolve(__dirname, './node_modules/foundation-sites/scss'),
+                  path.resolve(__dirname, './node_modules/bootstrap/scss'),
                 ],
                 sourceMap: true,
               },
@@ -96,6 +100,17 @@ module.exports = {
       title: 'Home',
       template: 'views/index.html',
     }),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false,
+      },
+      sourceMap: false,
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      },
+    }),
   ],
   devServer: {
     contentBase: path.join(__dirname, 'public'),
@@ -105,5 +120,6 @@ module.exports = {
     historyApiFallback: true,
     open: true,
   },
-  devtool: 'cheap-module-eval-source-map',
+  devtool: process.env.NODE_ENV === 'production' ? undefined : 'cheap-module-eval-source-map',
 };
+console.log(`!----YOU ARE IN ${process.env.NODE_ENV.toUpperCase()}----!`);
