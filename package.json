@@ -5,11 +5,12 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "prod": "SET NODE_ENV=production& node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js -p",
-    "build-dev": "webpack",
+    "dev": "webpack-dashboard -- node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "prod": "SET NODE_ENV=production& webpack-dashboard -- node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js -p",
+    "build-dev": "rm -rf ./public && webpack",
     "build-dev--watch": "webpack -d -w",
-    "build": "SET NODE_ENV=production& webpack -p"
+    "build": "SET NODE_ENV=production& rm -rf ./public && webpack -p",
+    "clear": "rm -rf ./public"
   },
   "repository": {},
   "author": "Pedro La Rosa",
@@ -44,13 +45,14 @@
     "resolve-url-loader": "^2.0.1",
     "sass-loader": "^6.0.2",
     "script-loader": "^0.7.0",
-    "sinon": "^1.17.7",
+    "sinon": "2.1.0",
     "sinon-chai": "^2.8.0",
-    "style-loader": "^0.13.1",
+    "style-loader": "0.16.0",
     "stylelint": "^7.9.0",
     "stylelint-config-standard": "^16.0.0",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",
+    "webpack-dashboard": "^0.3.0",
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
