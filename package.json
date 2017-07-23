@@ -1,7 +1,7 @@
 {
   "name": "web-boilerplate",
   "version": "1.0.0",
-  "description": "Simple boilerplate using webpack2",
+  "description": "Simple boilerplate using webpack3",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -24,10 +24,9 @@
     "babel-preset-stage-0": "^6.22.0",
     "css-loader": "0.28.4",
     "css-mqpacker": "6.0.1",
-    "eslint": "4.3.0",
-    "eslint-config-airbnb": "15.0.2",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint": "3.19.0",
+    "eslint-plugin-import": "2.6.1",
+    "eslint-plugin-jsx-a11y": "5.1.1",
     "extract-text-webpack-plugin": "3.0.0",
     "file-loader": "0.11.2",
     "html-loader": "^0.4.5",
@@ -46,7 +45,7 @@
     "stylelint-config-standard": "17.0.0",
     "url-loader": "^0.5.7",
     "webpack": "3.3.0",
-    "webpack-dev-server": "^2.4.1"
+    "webpack-dev-server": "2.6.1"
   },
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",

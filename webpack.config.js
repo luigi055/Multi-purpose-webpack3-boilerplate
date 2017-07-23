@@ -2,7 +2,10 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const WebpackDashboard = require('webpack-dashboard/plugin');
+
+const pages = {
+  index: 'index',
+};
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -20,19 +23,22 @@ module.exports = {
     filename: 'bundle.js',
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: '/.jsx?$/',
         exclude: /(node_modules|bower_components)/,
         use: [{
           loader: 'babel',
           options: {
             presets: [
-              ['latest', { modules: false }],
-              ['stage-0', { modules: false }],
+              ['latest', {
+                modules: false
+              }],
+              ['stage-0', {
+                modules: false
+              }],
             ],
           },
-        }], // end use
+        }, ], // end use
       }, // end .jsx? rule
       {
         test: /\.otf|woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -46,30 +52,28 @@ module.exports = {
         test: /.scss$/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-            }, {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-              },
-            }, {
-              loader: 'resolve-url-loader',
-              options: {
-                sourceMap: true,
-              },
-            }, {
-              loader: 'sass-loader',
-              options: {
-                includePaths: [
-                  path.resolve(__dirname, './node_modules/font-awesome/scss'),
-                  path.resolve(__dirname, './node_modules/bootstrap/scss'),
-                ],
-                sourceMap: true,
-              },
+          use: [{
+            loader: 'css-loader',
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
             },
-          ],
+          }, {
+            loader: 'resolve-url-loader',
+            options: {
+              sourceMap: true,
+            },
+          }, {
+            loader: 'sass-loader',
+            options: {
+              includePaths: [
+                path.resolve(__dirname, './node_modules/font-awesome/scss'),
+                path.resolve(__dirname, './node_modules/bootstrap/scss'),
+              ],
+              sourceMap: true,
+            },
+          }, ],
         }),
       }, // end scss loader
       {
@@ -78,48 +82,52 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif)$/i,
-        loaders: ['file-loader?limit=1024&name=assets/images/[name].[ext]', {
-          loader: 'image-webpack-loader',
-          options: {
-            mozjpeg: {
-              progressive: true,
-            },
-            gifsicle: {
-              interlaced: false,
-            },
-            optipng: {
-              optimizationLevel: 4,
-            },
-            pngquant: {
-              quality: '65-90',
-              speed: 4,
+        loaders: [
+          'file-loader?limit=1024&name=assets/images/[name].[ext]',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+              },
+              gifsicle: {
+                interlaced: false,
+              },
+              optipng: {
+                optimizationLevel: 4,
+              },
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              },
             },
           },
-        }],
+        ],
         exclude: /node_modules/,
         include: __dirname,
       },
     ], // end rules Array
   }, // end module Object
-  plugins: [
-    new ExtractTextPlugin('style.css'),
-    new HTMLWebpackPlugin({
+  plugins: Object.keys(pages)
+    .map((page) => new HTMLWebpackPlugin({
       title: 'Home',
-      template: 'views/index.html',
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false,
-      },
-      sourceMap: false,
-    }),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-    }),
-    new WebpackDashboard(),
-  ],
+      filename: `${page}.html`,
+      template: `views/${page}.html`,
+    }))
+    .concat([
+      new ExtractTextPlugin('style.css'),
+      new webpack.optimize.UglifyJsPlugin({
+        compressor: {
+          warnings: false,
+        },
+        sourceMap: false,
+      }),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        },
+      }),
+    ]),
   devServer: {
     contentBase: path.join(__dirname, 'public'),
     compress: true,
@@ -128,6 +136,7 @@ module.exports = {
     historyApiFallback: true,
     open: true,
   },
-  devtool: process.env.NODE_ENV === 'production' ? undefined : 'cheap-module-eval-source-map',
+  devtool: process.env.NODE_ENV === 'production' ?
+    undefined : 'cheap-module-eval-source-map',
 };
 console.log(`!----YOU ARE IN ${process.env.NODE_ENV.toUpperCase()}----!`);
