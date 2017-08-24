@@ -14,7 +14,7 @@ module.exports = {
   entry: [
     // 'babel-polyfill',
     'script-loader!jquery/dist/jquery.min.js',
-    'script-loader!tether/dist/js/tether.min.js',
+    'script-loader!popper.js/dist/umd/popper.min.js',
     'script-loader!bootstrap/dist/js/bootstrap.min.js',
     './app.js',
   ],
