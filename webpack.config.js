@@ -1,16 +1,16 @@
-const path = require('path');
-const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+const path = require ('path');
+const fs = require ('fs');
+const webpack = require ('webpack');
+const ExtractTextPlugin = require ('extract-text-webpack-plugin');
+const HTMLWebpackPlugin = require ('html-webpack-plugin');
 
-const pages = {
-  index: 'index',
-};
+// Get All html files from /views
+const htmlPages = fs.readdirSync (path.join (__dirname, 'src', 'views'));
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  context: path.resolve(__dirname, 'src'),
+  context: path.resolve (__dirname, 'src'),
   entry: [
     // 'babel-polyfill',
     'script-loader!jquery/dist/jquery.min.js',
@@ -19,26 +19,40 @@ module.exports = {
     './app.js',
   ],
   output: {
-    path: path.resolve(__dirname, 'public'),
+    path: path.resolve (__dirname, 'public'),
     filename: 'bundle.js',
   },
+  stats: {
+    colors: true,
+    reasons: true,
+    chunks: true,
+  },
   module: {
-    rules: [{
+    rules: [
+      {
+        enforce: 'pre',
+        test: /\.jsx?$/,
+        loader: 'eslint-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: '/.jsx?$/',
         exclude: /(node_modules|bower_components)/,
-        use: [{
-          loader: 'babel',
-          options: {
-            presets: [
-              ['latest', {
-                modules: false
-              }],
-              ['stage-0', {
-                modules: false
-              }],
-            ],
+        use: [
+          {
+            loader: 'babel',
+            options: {
+              presets: [
+                [
+                  'env',
+                  {
+                    modules: false,
+                  },
+                ],
+              ],
+            },
           },
-        }, ], // end use
+        ], // end use
       }, // end .jsx? rule
       {
         test: /\.otf|woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -50,30 +64,35 @@ module.exports = {
       }, // end ttf , eot and svg test
       {
         test: /.scss$/,
-        loader: ExtractTextPlugin.extract({
+        loader: ExtractTextPlugin.extract ({
           fallback: 'style-loader',
-          use: [{
-            loader: 'css-loader',
-          }, {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
+          use: [
+            {
+              loader: 'css-loader',
             },
-          }, {
-            loader: 'resolve-url-loader',
-            options: {
-              sourceMap: true,
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+              },
             },
-          }, {
-            loader: 'sass-loader',
-            options: {
-              includePaths: [
-                path.resolve(__dirname, './node_modules/font-awesome/scss'),
-                path.resolve(__dirname, './node_modules/bootstrap/scss'),
-              ],
-              sourceMap: true,
+            {
+              loader: 'resolve-url-loader',
+              options: {
+                sourceMap: true,
+              },
             },
-          }, ],
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: [
+                  path.resolve (__dirname, './node_modules/font-awesome/scss'),
+                  path.resolve (__dirname, './node_modules/bootstrap/scss'),
+                ],
+                sourceMap: true,
+              },
+            },
+          ],
         }),
       }, // end scss loader
       {
@@ -108,35 +127,39 @@ module.exports = {
       },
     ], // end rules Array
   }, // end module Object
-  plugins: Object.keys(pages)
-    .map((page) => new HTMLWebpackPlugin({
-      title: 'Home',
-      filename: `${page}.html`,
-      template: `views/${page}.html`,
-    }))
-    .concat([
-      new ExtractTextPlugin('style.css'),
-      new webpack.optimize.UglifyJsPlugin({
+  plugins: htmlPages
+    .map (
+      page =>
+        new HTMLWebpackPlugin ({
+          title: 'Home',
+          filename: `${page}`,
+          template: `views/${page}`,
+        })
+    )
+    .concat ([
+      new ExtractTextPlugin ('style.css'),
+      new webpack.optimize.UglifyJsPlugin ({
         compressor: {
           warnings: false,
         },
         sourceMap: false,
       }),
-      new webpack.DefinePlugin({
+      new webpack.DefinePlugin ({
         'process.env': {
-          NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+          NODE_ENV: JSON.stringify (process.env.NODE_ENV),
         },
       }),
     ]),
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
+    contentBase: path.join (__dirname, 'public'),
     compress: true,
     port: 3000,
     clientLogLevel: 'none',
     historyApiFallback: true,
     open: true,
   },
-  devtool: process.env.NODE_ENV === 'production' ?
-    undefined : 'cheap-module-eval-source-map',
+  devtool: process.env.NODE_ENV === 'production'
+    ? undefined
+    : 'cheap-module-eval-source-map',
 };
-console.log(`!----YOU ARE IN ${process.env.NODE_ENV.toUpperCase()}----!`);
+console.log (`!----YOU ARE IN ${process.env.NODE_ENV.toUpperCase ()}----!`);
