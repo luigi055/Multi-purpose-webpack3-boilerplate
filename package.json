@@ -18,15 +18,15 @@
   "author": "Pedro La Rosa",
   "license": "MIT",
   "devDependencies": {
-    "autoprefixer": "7.1.6",
+    "autoprefixer": "7.2.2",
     "babel-core": "6.26.0",
-    "babel-eslint": "8.0.2",
+    "babel-eslint": "8.0.3",
     "babel-loader": "7.1.2",
     "babel-polyfill": "6.26.0",
     "babel-preset-env": "1.6.1",
     "css-loader": "0.28.7",
     "css-mqpacker": "6.0.1",
-    "eslint": "4.12.0",
+    "eslint": "4.13.1",
     "eslint-config-airbnb": "16.1.0",
     "eslint-config-prettier": "2.9.0",
     "eslint-loader": "^1.9.0",
@@ -44,8 +44,8 @@
     "postcss-loader": "2.0.9",
     "postcss-vmin": "3.0.0",
     "postcss-will-change": "2.0.0",
-    "prettier": "1.8.2",
-    "resolve-url-loader": "2.2.0",
+    "prettier": "1.9.2",
+    "resolve-url-loader": "2.2.1",
     "sass-loader": "^6.0.2",
     "script-loader": "0.7.2",
     "style-loader": "0.19.0",
@@ -53,7 +53,7 @@
     "stylelint-config-standard": "18.0.0",
     "url-loader": "0.6.2",
     "webpack": "3.8.1",
-    "webpack-dev-server": "2.9.5"
+    "webpack-dev-server": "2.9.7"
   },
   "dependencies": {
     "bootstrap": "4.0.0-beta",
